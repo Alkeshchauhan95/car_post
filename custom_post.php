@@ -144,6 +144,7 @@ function create_car_texnomany()
 add_action('init','create_car_texnomany');
 
 
+
 // post data
 function car_entry_form_shortcode()
 {
@@ -263,5 +264,28 @@ function car_entry_form_shortcode()
 
 }
 add_shortcode('car_entry', 'car_entry_form_shortcode');
+
+
+// default page create
+
+function car_form_page()
+{
+	if ( !get_option('custom_form_page'))
+	{
+		$curr_page = array(
+					'post_title' => __('Car Form Page'),
+					'post_content' => '[car_entry]',
+					'post_status' => 'publish',
+					'post_type' => 'page',
+					'comment_status' => 'closed',
+					'ping_status' => 'closed',
+					'post_category' => array(1),
+					'post_parent' => 0 );
+		$curr_created = wp_insert_post( $curr_page );
+		update_option( 'custom_form_page', $curr_created );
+	}
+}
+add_action('init','car_form_page');
+
 
 ?>
